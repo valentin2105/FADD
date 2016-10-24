@@ -1,0 +1,16 @@
+wekan_app:
+  image: mquandalle/wekan
+  restart: always
+  links:
+    - wekan_db
+  environment:
+    - MONGO_URL=mongodb://wekan_db/wekan
+    - ROOT_URL=http://localhost
+  ports:
+    - 8100:80
+
+wekan_db:
+  image: mongo:latest
+  restart: always
+  volumes:
+    - ./data:/data/db

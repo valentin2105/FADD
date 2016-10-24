@@ -1,0 +1,28 @@
+web_front:
+  image: nginx
+  restart: always
+  ports:
+    - 8100:443
+  log_driver: syslog
+  links:
+    - web_fpm
+  volumes:
+    - ./www:/var/www/html:rw
+    - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    - ./logs/nginx:/var/log/nginx:rw
+    - /etc/letsencrypt:/etc/letsencrypt:z
+web_fpm:
+  image: php-fpm:7.0.9 
+  restart: always
+  links:
+    - web_db:mysql
+  volumes:
+    - ./www:/var/www/html
+web_db:
+   image: mariadb:latest
+   restart: always
+   volumes:
+    - ./mysql:/var/lib/mysql
+   environment:
+    - MYSQL_ROOT_PASSWORD=aStr0NgPaSsw0rd
+    - MYSQL_DATABASE=web

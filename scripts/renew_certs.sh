@@ -1,0 +1,1 @@
+docker run -it --rm --name letsencrypt -v "/etc/letsencrypt:/etc/letsencrypt" -v "/srv/letsencrypt.sh/challenge:/srv/letsencrypt.sh/challenge" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" quay.io/letsencrypt/letsencrypt renew -n --webroot --webroot-path /srv/letsencrypt.sh/challenge  -m contact@example.com

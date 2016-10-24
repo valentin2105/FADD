@@ -1,0 +1,18 @@
+drupal_front:
+  image: nginx
+  restart: always
+  ports:
+    - 8100:443
+  log_driver: syslog
+  links:
+    - drupal_fpm
+  volumes:
+    - ./www:/var/www/html:rw
+    - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    - ./logs/nginx:/var/log/nginx:rw
+    - /etc/letsencrypt:/etc/letsencrypt:z
+drupal_fpm:
+  image: php-fpm:7.0.9 
+  restart: always
+  volumes:
+    - ./www:/var/www/html

@@ -1,0 +1,28 @@
+joomla_front:
+  image: nginx
+  restart: always
+  ports:
+    - 8100:443
+  log_driver: syslog
+  links:
+    - joomla_fpm
+  volumes:
+    - ./www:/var/www/html:rw
+    - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    - ./logs/nginx:/var/log/nginx:rw
+    - /etc/letsencrypt:/etc/letsencrypt:z
+joomla_fpm:
+  image: php-fpm:7.0.9
+  restart: always
+  volumes:
+    - ./www:/var/www/html
+  links:
+    - joomla_db:mysql
+joomla_db:
+   image: mariadb:latest
+   restart: always
+   volumes:
+    - ./mysql:/var/lib/mysql
+   environment:
+    - MYSQL_ROOT_PASSWORD=aStr0NgPaSsw0rd
+    - MYSQL_DATABASE=joomla

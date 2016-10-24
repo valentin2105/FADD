@@ -1,0 +1,29 @@
+version: "2"
+services:
+ supervision_influxdb:
+   image: tutum/influxdb
+   restart: always
+   expose:
+     - "8090"
+     - "8099"
+     - "8083"
+     - "8086"
+   volumes:
+     - ./influxdb:/data
+    environment:
+     PRE_CREATE_DB: telegraf
+ supervision_grafana:
+   image: grafana/grafana:latest
+   restart: always
+   ports:
+     - "3000:3000"
+   volumes:
+     - ./grafana:/var/lib/grafana
+   link:
+     - supervision_influxdb
+  supervision_telegraf:
+    image: telegraf:latest
+    volumes:
+      - telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    link:
+      - supervision_influxdb

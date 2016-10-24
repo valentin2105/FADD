@@ -1,0 +1,1 @@
+0 0 * * * /srv/scripts/renew_certs.sh >/dev/null 2>&1

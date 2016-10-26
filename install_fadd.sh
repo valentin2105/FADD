@@ -44,7 +44,7 @@ echo "Change user variables..."
 tput sgr0
 echo ""
 mkdir -p $acmePath
-sed -i -- s/115.126.160.40/$pubIP/g $installPath/scripts/add_stack.sh
+sed -i -- s/10.1.1.1/$pubIP/g $installPath/scripts/add_stack.sh
 sed -i -- s+/srv/www+$installPath/www+g $installPath/scripts/add_stack.sh
 sed -i -- s+/srv/scripts+$installPath/scripts+g $installPath/scripts/add_stack.sh
 sed -i -- s+contact@example.com+$adminMail+g $installPath/scripts/add_stack.sh

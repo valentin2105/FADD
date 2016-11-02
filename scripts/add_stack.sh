@@ -114,30 +114,32 @@ if [ -z $stackType ]; then
   exit 1
 fi
 
+logsfile=(echo "$logsPath"/"$domain".log)
+
 ### Check Dependencies
 if [ ! -e $dockerPath/docker ]; then
 	echo -e "       Make some verifications        [${CRED}FAIL${CEND}]"
 	echo
-	echo "Docker is not present in $dockerPath" 2>&1 | tee -a $logsPath
+	echo "Docker is not present in $dockerPath" 2>&1 | tee -a $logsFile
 	exit 1
 fi
 if [ ! -e $composePath/docker-compose ]; then
 	echo -e "       Make some verifications        [${CRED}FAIL${CEND}]"
 	echo
-	echo "Docker-compose is not present in /usr/local/bin" 2>&1 | tee -a $logsPath
+	echo "Docker-compose is not present in /usr/local/bin" 2>&1 | tee -a $logsFile
 	exit 1
 fi
 if [ ! -e /usr/bin/pwgen ]; then
 	echo -e "       Make some verifications        [${CRED}FAIL${CEND}]"
 	echo
-	echo "Pwgen is not present in /usr/bin, please install pwgen" 2>&1 | tee -a $logsPath
+	echo "Pwgen is not present in /usr/bin, please install pwgen" 2>&1 | tee -a $logsFile
 	exit 1
 fi
 ### Check if folder already exist
 if [ -d $faddPath/$siteName ]; then
 	echo -e "       Make some verifications        [${CRED}FAIL${CEND}]"
 	echo
-	echo "The stack $siteName already exist, delete it first." 2>&1 | tee -a $logsPath
+	echo "The stack $siteName already exist, delete it first." 2>&1 | tee -a $logsFile
 	exit 1
 fi
 
@@ -146,7 +148,7 @@ siteNameDNS=$(nslookup $siteName | awk '/^Address: / { print $2 ; exit }')
 if [ "$pubIP" != "$siteNameDNS" ]; then
 	echo -e "       Make some verifications        [${CRED}FAIL${CEND}]"
 	echo
-	echo "The DNS of $siteName dont point on your server." 2>&1 | tee -a $logsPath
+	echo "The DNS of $siteName dont point on your server." 2>&1 | tee -a $logsFile
 	exit 1
 fi
 
@@ -156,7 +158,7 @@ checkPort=$(echo $?)
 if [ $checkPort -eq 0 ]; then
 	echo -e "       Make some verifications        [${CRED}FAIL${CEND}]"
 	echo
-	echo "The port $portWeb look like already using !" 2>&1 | tee -a $logsPath
+	echo "The port $portWeb look like already using !" 2>&1 | tee -a $logsFile
 	exit 1
 fi
 
@@ -166,7 +168,7 @@ checkNginx=$(echo $?)
 if [ $checkNginx -eq 1 ]; then
 	echo -e "       Make some verifications        [${CRED}FAIL${CEND}]"
 	echo
-	echo "There is any Nginx instance running on your Docker host ?" 2>&1 | tee -a $logsPath
+	echo "There is any Nginx instance running on your Docker host ?" 2>&1 | tee -a $logsFile
 fi
 
 echo -e "       Make some verifications        [${CGREEN}OK${CEND}]"
@@ -186,7 +188,7 @@ fi
 if [ ! -d /etc/letsencrypt/live/$siteName ]; then
   echo -e "       Generate stack certificates    [${CRED}FAIL${CEND}]"
 	echo
-	echo "Problem found with certs generation, Check DNS !" 2>&1 | tee -a $logsPath
+	echo "Problem found with certs generation, Check DNS !" 2>&1 | tee -a $logsFile
 	exit 1
 fi
 echo -e "       Generate stack certificates    [${CGREEN}OK${CEND}]"
@@ -222,16 +224,15 @@ if  [ "$stackType" == "wordpress" ]; then
 	chown www-data:www-data $faddPath/$siteName/www -R
 
 	## Launch the stack
-	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d wp_db  &>/dev/null
+	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d wp_db  &>/dev/null 2>&1 | tee -a $logsFile
 	## Sleep for waiting MySQL running
 	sleep 10;
-	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d wp_fpm  &>/dev/null 2>&1 | tee -a $logsPath
-	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d wp_front  &>/dev/null 2>&1 | tee -a $logsPath
-	checkLaunch=$(echo $?)
+	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d wp_fpm  &>/dev/null 2>&1 | tee -a $logsFile
+	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d wp_front  &>/dev/null 2>&1 | tee -a $logsFile
 	if [ $checkLaunch -eq 0 ]; then
 		echo -e "       Launch the stack               [${CGREEN}OK${CEND}]"
 		echo
-		echo "Your Wordpress is reachable at https://$siteName" 2>&1 | tee -a $logsPath
+		echo "Your Wordpress is reachable at https://$siteName" 2>&1 | tee -a $logsFile
 		echo
 		exit 0
   else
@@ -249,11 +250,10 @@ if  [ "$stackType" == "ghost" ]; then
 	sed -i -- s/aStr0NgPaSsw0rd/$ghostDbPasswd/g $faddPath/$siteName/docker-compose.yml
 
 	## Launch the stack
-	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d ghost_db  &>/dev/null 2>&1 | tee -a $logsPath
+	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d ghost_db  &>/dev/null 2>&1 | tee -a $logsFile
 	## Sleep for waiting MySQL running
 	sleep 15;
-	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d ghost_engine  &>/dev/null 2>&1 | tee -a $logsPath
-	checkLaunch=$(echo $?)
+	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d ghost_engine  &>/dev/null 2>&1 | tee -a $logsFile
 	if [ $checkLaunch -eq 0 ]; then
 		echo -e "       Launch the stack               [${CGREEN}OK${CEND}]"
 		echo
@@ -276,8 +276,7 @@ if  [ "$stackType" == "lemp" ]; then
 	sed -i -- s/example.com/$siteName/g $faddPath/$siteName/nginx.conf
 
 	## Launch the stack
-	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d   &>/dev/null 2>&1 | tee -a $logsPath
-	checkLaunch=$(echo $?)
+	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d   &>/dev/null 2>&1 | tee -a $logsFile
 	if [ $checkLaunch -eq 0 ]; then
 		echo -e "       Launch the stack               [${CGREEN}OK${CEND}]"
 		echo
@@ -296,7 +295,7 @@ if  [ "$stackType" == "wekan" ]; then
 	sed -i -- s/localhost/$siteName/g  $faddPath/$siteName/docker-compose.yml
 
 	## Launch the stack
-	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d   &>/dev/null 2>&1 | tee -a $logsPath
+	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d   &>/dev/null 2>&1 | tee -a $logsFile
 	checkLaunch=$(echo $?)
 	if [ $checkLaunch -eq 0 ]; then
 		echo -e "       Launch the stack               [${CGREEN}OK${CEND}]"
@@ -319,7 +318,7 @@ if  [ "$stackType" == "drupal" ]; then
 	chown www-data:www-data $faddPath/$siteName/www -R
 
 	## Launch the stack
-	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d   &>/dev/null 2>&1 | tee -a $logsPath
+	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d   &>/dev/null 2>&1 | tee -a $logsFile
 	checkLaunch=$(echo $?)
 	if [ $checkLaunch -eq 0 ]; then
 		echo -e "       Launch the stack               [${CGREEN}OK${CEND}]"
@@ -336,7 +335,7 @@ fi
 if  [ "$stackType" == "joomla" ]; then
 	## Let's generate a DB password
   joomlaDbPasswd=$(pwgen 16 1)
-	sed -i -- s/aStr0NgPaSsw0rd/$joomlaDbPasswd/g $faddPath/$siteName/docker-compose.yml 2>&1 | tee -a $logsPath
+	sed -i -- s/aStr0NgPaSsw0rd/$joomlaDbPasswd/g $faddPath/$siteName/docker-compose.yml
 
 	## Change port and site_name to bind
 	sed -i -- s/8100/$portWeb/g $faddPath/$siteName/docker-compose.yml
@@ -346,7 +345,7 @@ if  [ "$stackType" == "joomla" ]; then
 	chown www-data:www-data $faddPath/$siteName/www -R
 
 	## Launch the stack
-	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d   &>/dev/null 2>&1 | tee -a $logsPath
+	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d   &>/dev/null 2>&1 | tee -a $logsFile
 	checkLaunch=$(echo $?)
 	if [ $checkLaunch -eq 0 ]; then
 		echo -e "       Launch the stack               [${CGREEN}OK${CEND}]"

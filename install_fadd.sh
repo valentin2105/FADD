@@ -1,20 +1,25 @@
 #! /bin/bash
 
+apt-get install -y apt-transport-https jq ca-certificates python-pip pwgen dnsutils wget unzip
+
 ############################################################################
 ## This script is a fast-way to deploy FADD on a clean Debian jessie server.
 ############################################################################
 # CHECK THESE VALUES :
 ############################################################################
 ### User Vars
-faddPath=/opt/FADD
-installPath=/srv
-pubIP=10.1.1.1
-distrib=jessie
-acmeDomain=tls.example.com
-acmePath=/srv/certs/challenges
-adminMail=contact@example.com
-############################################################################
+configPath=$(echo $PWD/config.json)
+faddPath=$(jq -r .faddPath $configPath)
+installPath=$(jq -r .installPath $configPath)
+pubIP=$(jq -r .pubIP $configPath)
+distrib=$(jq -r .distrib $configPath)
+acmeDomain=$(jq -r .acmeDomain $configPath)
+acmePath=$(jq -r .acmePath $configPath)
+adminMail=$(jq -r .adminMail $configPath)
 
+############################################################################
+echo $adminMail
+exit 0
 ### Let's install requirements
 tput bold
 echo "Lets install Docker..."
@@ -48,19 +53,19 @@ sed -i -- s/10.1.1.1/$pubIP/g $installPath/scripts/add_stack.sh
 sed -i -- s+/srv/www+$installPath/www+g $installPath/scripts/add_stack.sh
 sed -i -- s+/srv/scripts+$installPath/scripts+g $installPath/scripts/add_stack.sh
 sed -i -- s+contact@example.com+$adminMail+g $installPath/scripts/add_stack.sh
-sed -i -- s+/srv/letsencrypt.sh/challenges/+$acmePath+g $installPath/scripts/add_domain.sh
-sed -i -- s+/srv/nginx+$installPath/nginx+g $installPath/scripts/add_domain.sh
-sed -i -- s+/srv/letsencrypt.sh/challenges+$acmePath+g $installPath/scripts/renew_certs.sh
+sed -i -- s+/path/to/acme/+$acmePath+g $installPath/scripts/add_domain.sh
+sed -i -- s+/path/to/nginx+$installPath/nginx+g $installPath/scripts/add_domain.sh
+sed -i -- s+/path/to/acme+$acmePath+g $installPath/scripts/renew_certs.sh
 sed -i -- s+contact@example.com+$adminMail+g $installPath/scripts/renew_certs.sh
 sed -i -- s+/srv+$installPath+g $installPath/scripts/delete_stack.sh
 
 
 ### Configure Nginx
-sed -i -- s+/srv/letsencrypt.sh/challenges+$acmePath+g $installPath/nginx/docker-compose.yml
+sed -i -- s+/path/to/acme+$acmePath+g $installPath/nginx/docker-compose.yml
 sed -i -- s+tls.example.com+$acmeDomain+g $installPath/nginx/conf.included/acme.conf
 mv $installPath/nginx/sites-enabled/tls.example.com $installPath/nginx/sites-enabled/$acmeDomain
 sed -i -- s+tls.example.com+$acmeDomain+g $installPath/nginx/sites-enabled/$acmeDomain
-sed -i -- s+/srv/letsencrypt.sh/challenges+$acmePath+g $installPath/nginx/sites-enabled/$acmeDomain
+sed -i -- s+/path/to/acme+$acmePath+g $installPath/nginx/sites-enabled/$acmeDomain
 
 
 ### Download images

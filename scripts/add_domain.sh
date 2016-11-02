@@ -1,8 +1,8 @@
 #! /bin/bash
 
 nginx_name=nginx_front_nginx_1
-path=/srv/letsencrypt.sh/challenges/
-nginxPath=/srv/nginx
+path=/path/to/acme
+nginxPath=/path/to/nginx
 # Catch Args
 ##################################################################
 while test $# -gt 0; do

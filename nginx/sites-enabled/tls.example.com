@@ -1,8 +1,8 @@
 server {
         allow all;
-        server_name   tls.example.com; 
+        server_name   tls.example.com;
         listen 80;
-        root /srv/letsencrypt.sh/challenges/;
+        root /path/to/acme;
         location / {
                 allow all;
         }

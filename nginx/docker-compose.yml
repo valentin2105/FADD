@@ -10,4 +10,4 @@ front_nginx:
      - ./nginx.conf:/etc/nginx/nginx.conf:ro
      - ./sites-enabled:/etc/nginx/sites-enabled
      - ./conf.included:/etc/nginx/conf.included
-     - /srv/letsencrypt.sh/challenges:/srv/letsencrypt.sh/challenges
+     - /path/to/acme:/path/to/acme

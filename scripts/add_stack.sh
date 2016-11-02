@@ -229,6 +229,8 @@ if  [ "$stackType" == "wordpress" ]; then
 	sleep 10;
 	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d wp_fpm  &>/dev/null 2>&1 | tee -a $logsFile
 	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d wp_front  &>/dev/null 2>&1 | tee -a $logsFile
+	checkLaunch=$(echo $?)
+
 	if [ $checkLaunch -eq 0 ]; then
 		echo -e "       Launch the stack               [${CGREEN}OK${CEND}]"
 		echo
@@ -254,6 +256,8 @@ if  [ "$stackType" == "ghost" ]; then
 	## Sleep for waiting MySQL running
 	sleep 15;
 	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d ghost_engine  &>/dev/null 2>&1 | tee -a $logsFile
+	checkLaunch=$(echo $?)
+
 	if [ $checkLaunch -eq 0 ]; then
 		echo -e "       Launch the stack               [${CGREEN}OK${CEND}]"
 		echo
@@ -277,6 +281,7 @@ if  [ "$stackType" == "lemp" ]; then
 
 	## Launch the stack
 	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d   &>/dev/null 2>&1 | tee -a $logsFile
+	checkLaunch=$(echo $?)
 	if [ $checkLaunch -eq 0 ]; then
 		echo -e "       Launch the stack               [${CGREEN}OK${CEND}]"
 		echo

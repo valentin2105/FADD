@@ -1,6 +1,8 @@
 #! /bin/bash
 
-apt-get install -y apt-transport-https jq ca-certificates python-pip pwgen dnsutils wget unzip
+if [[ "$1" != "--upgrade" ]]; then
+	apt-get install -y apt-transport-https jq ca-certificates python-pip pwgen dnsutils wget unzip
+fi
 
 ############################################################################
 ## This script is a fast-way to deploy FADD on a clean Debian jessie server.
@@ -19,15 +21,18 @@ acmePath=$(jq -r .acmePath $configPath)
 adminMail=$(jq -r .adminMail $configPath)
 
 ############################################################################
-### Let's install requirements
-tput bold
-echo "Lets install Docker..."
-tput sgr0
-echo ""
-$faddPath/misc/install_docker.sh $distrib
+
+if [[ "$1" != "--upgrade" ]]; then
+	### Let's install requirements
+	tput bold
+	echo "Lets install Docker..."
+	tput sgr0
+	echo ""
+	$faddPath/misc/install_docker.sh $distrib
+fi
 
 if [ "$faddPath" != "$installPath" ]; then
-	### Let's create symlinks
+	### Let's copy scripts
 	cp -r $faddPath/scripts $installPath
 	cp -r $faddPath/www $installPath
 	cp -r $faddPath/nginx $installPath
@@ -71,32 +76,34 @@ sed -i -- s+tls.example.com+$acmeDomain+g $installPath/nginx/sites-enabled/$acme
 sed -i -- s+/path/to/acme+$acmePath+g $installPath/nginx/sites-enabled/$acmeDomain
 
 
-### Download images
-tput bold
-echo "Download latest images..."
-tput sgr0
-echo ""
-$faddPath/misc/pull_images.sh
+if [[ "$1" != "--upgrade" ]]; then
+	### Download images
+	tput bold
+	echo "Download latest images..."
+	tput sgr0
+	echo ""
+	$faddPath/misc/pull_images.sh
 
-# Wordpress
-tar -zxf /tmp/wordpress.tar.gz -C $installPath/www/base/wordpress/
-mv $installPath/www/base/wordpress/wordpress $installPath/www/base/wordpress/www
-mv $installPath/www/base/wordpress/wp-config.php $installPath/www/base/wordpress/www
+	# Wordpress
+	tar -zxf /tmp/wordpress.tar.gz -C $installPath/www/base/wordpress/
+	mv $installPath/www/base/wordpress/wordpress $installPath/www/base/wordpress/www
+	mv $installPath/www/base/wordpress/wp-config.php $installPath/www/base/wordpress/www
 
-# Drupal 8.1.8
-tar -zxf /tmp/drupal.tar.gz -C $installPath/www/base/drupal/
-mv $installPath/www/base/drupal/drupal-8.1.8 $installPath/www/base/drupal/www
+	# Drupal 8.1.8
+	tar -zxf /tmp/drupal.tar.gz -C $installPath/www/base/drupal/
+	mv $installPath/www/base/drupal/drupal-8.1.8 $installPath/www/base/drupal/www
 
-# Joomla
-unzip /tmp/joomla.zip -d $installPath/www/base/joomla/www/ > /dev/null
+	# Joomla
+	unzip /tmp/joomla.zip -d $installPath/www/base/joomla/www/ > /dev/null
 
-### Build latest PHP-FPM image
-tput bold
-echo "Build PHP-Fpm image..."
-tput sgr0
-echo ""
-docker build -t php-fpm:7.0.9 $installPath/www/base/build/php-fpm/
+	### Build latest PHP-FPM image
+	tput bold
+	echo "Build PHP-Fpm image..."
+	tput sgr0
+	echo ""
+	docker build -t php-fpm:7.0.9 $installPath/www/base/build/php-fpm/
 
+fi
 ### Launch Nginx
 tput bold
 echo "Launch Nginx..."

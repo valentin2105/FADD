@@ -1,4 +1,4 @@
-apt-get update; apt-get -y dist-upgrade
+apt-get update
 apt-get install -y apt-transport-https ca-certificates python-pip pwgen dnsutils wget unzip
 
 if [ "$1" == "jessie" ]; then

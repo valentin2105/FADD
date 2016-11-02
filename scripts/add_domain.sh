@@ -4,7 +4,7 @@ nginx_name=nginx_front_nginx_1
 path=/path/to/acme
 nginxPath=/path/to/nginx
 logsPath=/path/to/logs
-logsfile=(echo "$logsPath"/"$domain".log)
+logsFile=(echo "$logsPath"/"$domain".log)
 
 # Catch Args
 ##################################################################

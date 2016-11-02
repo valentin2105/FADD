@@ -18,8 +18,6 @@ acmePath=$(jq -r .acmePath $configPath)
 adminMail=$(jq -r .adminMail $configPath)
 
 ############################################################################
-echo $adminMail
-exit 0
 ### Let's install requirements
 tput bold
 echo "Lets install Docker..."

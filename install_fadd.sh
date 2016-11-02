@@ -11,7 +11,7 @@ apt-get install -y apt-transport-https jq ca-certificates python-pip pwgen dnsut
 configPath=$(echo $PWD/config.json)
 faddPath=$(jq -r .faddPath $configPath)
 installPath=$(jq -r .installPath $configPath)
-logsPath=$(jq -r .installPath $configPath)
+logsPath=$(jq -r .logsPath $configPath)
 pubIP=$(jq -r .pubIP $configPath)
 distrib=$(jq -r .distrib $configPath)
 acmeDomain=$(jq -r .acmeDomain $configPath)

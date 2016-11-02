@@ -54,10 +54,10 @@ sed -i -- s/10.1.1.1/$pubIP/g $installPath/scripts/add_stack.sh
 sed -i -- s+/srv/www+$installPath/www+g $installPath/scripts/add_stack.sh
 sed -i -- s+/srv/scripts+$installPath/scripts+g $installPath/scripts/add_stack.sh
 sed -i -- s+contact@example.com+$adminMail+g $installPath/scripts/add_stack.sh
-sed -i -- s+/path/to/acme/+$acmePath+g $installPath/scripts/add_domain.sh
+sed -i -- s+/path/to/acme+$acmePath+g $installPath/scripts/add_domain.sh
 sed -i -- s+/path/to/nginx+$installPath/nginx+g $installPath/scripts/add_domain.sh
-sed -i -- s+/path/to/logs/+$logsPath+g $installPath/scripts/add_domain.sh
-sed -i -- s+/path/to/logs/+$logsPath+g $installPath/scripts/add_stack.sh
+sed -i -- s+/path/to/logs+$logsPath+g $installPath/scripts/add_domain.sh
+sed -i -- s+/path/to/logs+$logsPath+g $installPath/scripts/add_stack.sh
 sed -i -- s+/path/to/acme+$acmePath+g $installPath/scripts/renew_certs.sh
 sed -i -- s+contact@example.com+$adminMail+g $installPath/scripts/renew_certs.sh
 sed -i -- s+/srv+$installPath+g $installPath/scripts/delete_stack.sh

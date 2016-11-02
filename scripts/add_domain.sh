@@ -47,7 +47,7 @@ while test $# -gt 0; do
                         ;;
         esac
 done
-echo "Creating domain $domain ..." 2>&1 | tee -a $logsPath
+echo "Creating domain $domain ..." 2>&1 | tee -a $logsFile
 ## Gen certs using tls.example.com
 docker run -it --rm --name letsencrypt -v "/etc/letsencrypt:/etc/letsencrypt" -v "$path":"$path" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" quay.io/letsencrypt/letsencrypt certonly -n --webroot --webroot-path $path --agree-tos --rsa-key-size 4096 -d $domain -m $mail 2>&1 | tee -a $logsFile
 verifCerts=$(echo $?)

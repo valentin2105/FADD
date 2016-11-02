@@ -4,7 +4,6 @@ nginx_name=nginx_front_nginx_1
 path=/path/to/acme
 nginxPath=/path/to/nginx
 logsPath=/path/to/logs
-logsFile=(echo "$logsPath"/"$domain".log)
 
 # Catch Args
 ##################################################################
@@ -47,6 +46,7 @@ while test $# -gt 0; do
                         ;;
         esac
 done
+logsFile=$(echo "$logsPath"/"$domain".log)
 echo "Creating domain $domain ..." 2>&1 | tee -a $logsFile
 ## Gen certs using tls.example.com
 docker run -it --rm --name letsencrypt -v "/etc/letsencrypt:/etc/letsencrypt" -v "$path":"$path" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" quay.io/letsencrypt/letsencrypt certonly -n --webroot --webroot-path $path --agree-tos --rsa-key-size 4096 -d $domain -m $mail 2>&1 | tee -a $logsFile

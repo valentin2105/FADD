@@ -93,7 +93,7 @@ CGREEN="${CSI}1;32m"
 CRED="${CSI}1;31m"
 CEND="${CSI}0m"
 echo
-logsFile=(echo "$logsPath"/"$domain".log)
+logsFile=$(echo "$logsPath"/"$domain".log)
 echo "Let's create `tput bold`$siteName`tput sgr0`..." 2>&1 | tee -a $logsFile
 echo
 if [ -z $siteName ]; then

@@ -89,9 +89,9 @@ if [[ "$1" != "--upgrade" ]]; then
 	mv $installPath/www/base/wordpress/wordpress $installPath/www/base/wordpress/www
 	mv $installPath/www/base/wordpress/wp-config.php $installPath/www/base/wordpress/www
 
-	# Drupal 8.1.8
-	tar -zxf /tmp/drupal.tar.gz -C $installPath/www/base/drupal/
-	mv $installPath/www/base/drupal/drupal-8.1.8 $installPath/www/base/drupal/www
+	# Drupal 8.2.1
+	tar -zxf /tmp/drupal* -C $installPath/www/base/drupal/
+	mv $installPath/www/base/drupal/drupal-8.2.1 $installPath/www/base/drupal/www
 
 	# Joomla
 	unzip /tmp/joomla.zip -d $installPath/www/base/joomla/www/ > /dev/null

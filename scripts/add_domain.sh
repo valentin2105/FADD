@@ -47,9 +47,9 @@ while test $# -gt 0; do
         esac
 done
 logsFile=$(echo "$logsPath"/"$domain".log)
-echo "Creating domain $domain ..." 2>&1 | tee -a $logsFile
+echo "Creating domain $domain ..." | tee -a $logsFile  &>/dev/null
 ## Gen certs using tls.example.com
-docker run -it --rm --name letsencrypt -v "/etc/letsencrypt:/etc/letsencrypt" -v "$path":"$path" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" quay.io/letsencrypt/letsencrypt certonly -n --webroot --webroot-path $path --agree-tos --rsa-key-size 4096 -d $domain -m $mail 2>&1 | tee -a $logsFile
+docker run -it --rm --name letsencrypt -v "/etc/letsencrypt:/etc/letsencrypt" -v "$path":"$path" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" quay.io/letsencrypt/letsencrypt certonly -n --webroot --webroot-path $path --agree-tos --rsa-key-size 4096 -d $domain -m $mail | tee -a $logsFile  &>/dev/null
 verifCerts=$(echo $?)
 
 ## Check IF Certs are presents
@@ -72,8 +72,8 @@ verifNginx=$(echo $?)
 ## Check IF Nginx clean reload
 if [ $verifNginx -eq 1 ]; then
 exit 1
-echo "Problem reloading Nginx" 2>&1 | tee -a $logsFile
+echo "Problem reloading Nginx" | tee -a $logsFile  &>/dev/null
 fi
 
-echo "Nginx reload sucess" 2>&1 | tee -a $logsFile
+echo "Nginx reload sucess" | tee -a $logsFile  &>/dev/null
 exit 0

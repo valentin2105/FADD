@@ -94,7 +94,7 @@ CRED="${CSI}1;31m"
 CEND="${CSI}0m"
 echo
 logsFile=$(echo "$logsPath"/"$siteName".log)
-echo "Let's create `tput bold`$siteName`tput sgr0`..." 2>&1 | tee -a $logsFile
+echo "Let's create `tput bold`$siteName`tput sgr0`..."  | tee -a $logsFile  &>/dev/null
 echo
 if [ -z $siteName ]; then
 	echo -e "       Make some verifications        [${CRED}FAIL${CEND}]"

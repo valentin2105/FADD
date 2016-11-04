@@ -1,13 +1,13 @@
 # FADD (Fully Automated Docker Deployment)
 ![](http://i.imgur.com/AvRuVrn.png)
+> F.A.D.D is a bunch of shell scripts that provide a easy way to deploy application stacks (based on Docker-Compose) secured over a multi-domain TLS reverse-proxy (Nginx) with Let's Encrypt auto-generation and virtual hosts auto-deployment.
+
 ### Features :
 - Nginx TLS Reverse-proxy
 - Automatic Let's Encrypt support
 - SNI Multi-Domain support
 - Multi-image deployment (Wordpress, LEMP, Ghost, Drupal ...)
 - Automatic script for launch a deployment
-
-
 
 ### Scripts :
 Easily install Docker and all requirements :
@@ -18,9 +18,9 @@ vim config.json # Configure FADD
 ```
 
 There are some shell scripts to manage your Docker Host :
-- `add_stack.sh` - Deploy an image from the hub and a Nginx TLS vhost.
-- `add_domain.sh` - Deploy a Nginx TLS vhost for a specified port.
-- `delete_stack.sh` - Delete stack, certs & config of the website.
+- `add_stack.sh` - Deploy an app stack and his Nginx TLS vhost.
+- `add_domain.sh` - Deploy a Nginx TLS vhost for proxify a specified port.
+- `delete_stack.sh` - Delete datas, certs & config of the app stack.
 - `renew_certs.sh` - Renew all TLS certs presents on the host.
 
 ### Examples :

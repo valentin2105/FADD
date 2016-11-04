@@ -29,10 +29,10 @@ There are some shell scripts to manage your Docker Host :
 
 `add_domain.sh --security=no --ip=10.0.0.5 --port=8080`
 
-### Dependency :
+### Requirements :
 - Ubuntu (14.04 / 16.04) / Debian 8
 - Python2.7
-- Docker 1.*
+- Docker 1.10+
 - Docker-compose
 - curl, openssl, jq, wget, netstat ...
 

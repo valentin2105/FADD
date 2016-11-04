@@ -1,7 +1,5 @@
 # FADD (Fully Automated Docker Deployment)
-![](https://opsnotice.xyz/content/images/2016/08/FADD-small.png)
-![](https://fadd.opsnotice.xyz/content/images/2016/08/fadd-images-1.jpg)
-
+![](http://i.imgur.com/AvRuVrn.png)
 ### Features :
 - Nginx TLS Reverse-proxy
 - Automatic Let's Encrypt support

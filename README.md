@@ -7,14 +7,21 @@
 - Multi-image deployment (Wordpress, LEMP, Ghost, Drupal ...)
 - Automatic script for launch a deployment
 
+
+
 ### Scripts :
+Easily install Docker and all requirements :
+```
+cd /opt ; git clone https://github.com/valentin2105/FADD.git ; cd /opt/FADD
+vim config.json # Configure FADD
+./install_fadd.sh
+```
+
 There are some shell scripts to manage your Docker Host :
 - `add_stack.sh` - Deploy an image from the hub and a Nginx TLS vhost.
 - `add_domain.sh` - Deploy a Nginx TLS vhost for a specified port.
 - `delete_stack.sh` - Delete stack, certs & config of the website.
 - `renew_certs.sh` - Renew all TLS certs presents on the host.
-- `install_docker.sh` - Install Docker and requirements
-- `install_fadd.sh` - Fully automated FADD deployment on Debian Jessie.
 
 ### Examples :
 - Deploy All-in-one Wordpress :

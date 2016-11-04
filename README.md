@@ -10,7 +10,7 @@
 - Automatic script for launch a deployment
 
 ### Scripts :
-There are some shell script to manage your Docker Host :
+There are some shell scripts to manage your Docker Host :
 - `add_stack.sh` - Deploy an image from the hub and a Nginx TLS vhost.
 - `add_domain.sh` - Deploy a Nginx TLS vhost for a specified port.
 - `delete_stack.sh` - Delete stack, certs & config of the website.
@@ -29,6 +29,13 @@ There are some shell script to manage your Docker Host :
 
 `add_domain.sh --security=no --ip=10.0.0.5 --port=8080`
 
+### Dependency :
+- Ubuntu (14.04 / 16.04) / Debian 8
+- Python2.7
+- Docker 1.*
+- Docker-compose
+- curl, openssl, jq, wget, netstat ...
+
 ### Hub :
 - Wordpress (Nginx/PHP7/MariaDB)
 - Joomla (Nginx/PHP7/MariaDB)
@@ -36,10 +43,5 @@ There are some shell script to manage your Docker Host :
 - LEMP (Nginx/PHP7/MariaDB) + FTP ?
 - Ghost (Nginx, Ghost JS)
 - Wekan (Nginx, Wekan MeteorJS)
-
-### Next steps :
-- Docker Swarm support
-- Web UI in Python ?
-- Add hundred of images in Hub.
 
 ## https://fadd.opsnotice.xyz

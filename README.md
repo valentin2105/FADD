@@ -19,7 +19,7 @@ vim config.json # Configure FADD
 
 There are some shell scripts to manage your Docker Host :
 - `add_stack.sh` - Deploy an app stack and his Nginx TLS vhost.
-- `add_domain.sh` - Deploy a Nginx TLS vhost for proxify a specified port.
+- `add_domain.sh` - Deploy a Nginx TLS vhost to proxify a specified port.
 - `delete_stack.sh` - Delete datas, certs & config of the app stack.
 - `renew_certs.sh` - Renew all TLS certs presents on the host.
 

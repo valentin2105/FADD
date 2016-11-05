@@ -33,6 +33,11 @@ There are some shell scripts to manage your Docker Host :
 
 `add_domain.sh --proto=http --ip=10.0.0.5 --port=8080`
 
+
+### Demo :
+
+[![asciicast](https://asciinema.org/a/91585.png)](https://asciinema.org/a/91585)
+
 ### Requirements :
 - Ubuntu (14.04 / 16.04) / Debian 8
 - Python 2.7

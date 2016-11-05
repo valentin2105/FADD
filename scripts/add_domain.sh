@@ -17,15 +17,15 @@ while test $# -gt 0; do
                         echo " "
                         echo "options:"
                         echo "-h, --help                show brief help"
-                        echo "--security=YES/NO         reverse-proxy to https/http"
+                        echo "--proto=http/https         reverse-proxy to https/http"
 			echo "--backend=IP:PORT         specify a ip to redirect"
 			echo "--domain=DOMAIN           specify a port to redirect"
                         echo "--email=EMAIL-ADDRESS     specify a contact for Lets encrypt"
                         exit 0
                         ;;
 
-                --security*)
-                        export security=`echo $1 | sed -e 's/^[^=]*=//g'`
+                --proto*)
+                        export proto=`echo $1 | sed -e 's/^[^=]*=//g'`
                         shift
                         ;;
                 --backend*)
@@ -58,10 +58,10 @@ exit 1
 fi
 
 ## Deploy Nginx configuration
-if [ "$security" == "no" ] || [ "$security" == "NO" ] ; then
+if [ "$proto" == "HTTP" ] || [ "$proto" == "http" ] ; then
 cat $nginxPath/example.com |sed s/example.com/$domain/g |sed s+127.0.0.1+$backend+g  > $nginxPath/sites-enabled/$domain
 fi
-if [ "$security" == "yes" ] || [ "$security" == "YES" ] ; then
+if [ "$proto" == "HTTPS" ] || [ "$proto" == "HTTPS" ] ; then
 cat $nginxPath/example.com |sed s/example.com/$domain/g |sed s+http://127.0.0.1+https://$backend+g  > $nginxPath/sites-enabled/$domain
 fi
 

@@ -32,7 +32,7 @@ There are some shell scripts to manage your Docker Host :
 
 `docker run --name nginx -d -p 8080:80 nginx:latest`
 
-`add_domain.sh --security=no --ip=10.0.0.5 --port=8080`
+`add_domain.sh --proto=http --ip=10.0.0.5 --port=8080`
 
 ### Requirements :
 - Ubuntu (14.04 / 16.04) / Debian 8

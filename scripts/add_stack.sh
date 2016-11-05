@@ -177,10 +177,10 @@ echo -e "       Make some verifications        [${CGREEN}OK${CEND}]"
 ##################################################################
 ## Create Certs & Reverse-Proxy vhost to https
 if [ "$stackType" == "ghost" ] || [ "$stackType" == "wekan" ] ; then
-	$scriptsPath/add_domain.sh --security=no --domain=$siteName --backend="$pubIP":"$portWeb"  --email="$adminMail"
+	$scriptsPath/add_domain.sh --proto=http --domain=$siteName --backend="$pubIP":"$portWeb"  --email="$adminMail"
 	checkAddDomain=$(echo $?)
 else
-	$scriptsPath/add_domain.sh --security=yes --domain=$siteName --backend="$pubIP":"$portWeb"  --email="$adminMail"
+	$scriptsPath/add_domain.sh --proto=https --domain=$siteName --backend="$pubIP":"$portWeb"  --email="$adminMail"
 	checkAddDomain=$(echo $?)
 fi
 

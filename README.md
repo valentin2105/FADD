@@ -12,8 +12,9 @@
 ### Scripts :
 Easily install Docker and all requirements :
 ```
-cd /opt ; git clone https://github.com/valentin2105/FADD.git ; cd /opt/FADD
-vim config.json # Configure FADD
+cd /opt 
+git clone https://github.com/valentin2105/FADD.git 
+cd /opt/FADD ; vim config.json # Configure FADD
 ./install_fadd.sh
 ```
 
@@ -25,19 +26,17 @@ There are some shell scripts to manage your Docker Host :
 
 ### Examples :
 - Deploy All-in-one Wordpress :
-
 `add_stack.sh --image=wordpress --domain=site01.example.com --expose=8101`
 
 - Run a docker service an expose his port :
-
 `docker run --name nginx -d -p 8080:80 nginx:latest`
 
 `add_domain.sh --proto=http --ip=10.0.0.5 --port=8080`
 
 ### Requirements :
 - Ubuntu (14.04 / 16.04) / Debian 8
-- Python2.7
-- Docker 1.10+
+- Python 2.7
+- Docker 1.x
 - Docker-compose
 - curl, openssl, jq, wget, netstat ...
 

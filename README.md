@@ -1,4 +1,4 @@
-# FADD (Fully Automated Docker Deployment)
+# FADD (Fully Automated Docker Deployments)
 ![](http://i.imgur.com/AvRuVrn.png)
 > F.A.D.D is a bunch of shell scripts that provide a easy way to deploy application stacks (based on Docker-Compose) secured over a multi-domain TLS reverse-proxy (Nginx) with Let's Encrypt auto-generation and virtual hosts auto-deployment.
 

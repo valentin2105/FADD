@@ -46,7 +46,7 @@ There are some shell scripts to manage your Docker Host :
 - Wordpress (Nginx/PHP7/MariaDB)
 - Joomla (Nginx/PHP7/MariaDB)
 - Drupal 8 (Nginx/PHP7/SQLite)
-- LEMP (Nginx/PHP7/MariaDB) + FTP ?
+- LEMP (Nginx/PHP7/MariaDB) 
 - Ghost (Nginx, Ghost JS)
 - Wekan (Nginx, Wekan MeteorJS)
 

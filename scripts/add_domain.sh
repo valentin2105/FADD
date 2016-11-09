@@ -61,7 +61,7 @@ fi
 if [ "$proto" == "HTTP" ] || [ "$proto" == "http" ] ; then
 cat $nginxPath/example.com |sed s/example.com/$domain/g |sed s+127.0.0.1+$backend+g  > $nginxPath/sites-enabled/$domain
 fi
-if [ "$proto" == "HTTPS" ] || [ "$proto" == "HTTPS" ] ; then
+if [ "$proto" == "HTTPS" ] || [ "$proto" == "https" ] ; then
 cat $nginxPath/example.com |sed s/example.com/$domain/g |sed s+http://127.0.0.1+https://$backend+g  > $nginxPath/sites-enabled/$domain
 fi
 

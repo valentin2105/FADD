@@ -1,7 +1,7 @@
 server {
   listen         80;
   server_name    example.com;
-  include /etc/nginx/conf.included/acme.conf;
+  include /etc/nginx/conf-included/acme.conf;
   return         301 https://$server_name$request_uri;
 }
 
@@ -23,8 +23,8 @@ server {
 #  ssl_dhparam /etc/ssl/certs/dhparam.pem;
   location / {
       proxy_pass http://127.0.0.1;
-    proxy_buffers 8 24k;
-    proxy_buffer_size 2k;
+      proxy_buffers 8 24k;
+      proxy_buffer_size 2k;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP $remote_addr;
       proxy_set_header X-Forwarded-Proto $scheme;

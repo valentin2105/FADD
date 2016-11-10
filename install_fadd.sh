@@ -70,7 +70,7 @@ sed -i -- s+/srv+$installPath+g $installPath/scripts/delete_stack.sh
 
 ### Configure Nginx
 sed -i -- s+/path/to/acme+$acmePath+g $installPath/nginx/docker-compose.yml
-sed -i -- s+tls.example.com+$acmeDomain+g $installPath/nginx/conf.included/acme.conf
+sed -i -- s+tls.example.com+$acmeDomain+g $installPath/nginx/conf-included/acme.conf
 mv $installPath/nginx/sites-enabled/tls.example.com $installPath/nginx/sites-enabled/$acmeDomain
 sed -i -- s+tls.example.com+$acmeDomain+g $installPath/nginx/sites-enabled/$acmeDomain
 sed -i -- s+/path/to/acme+$acmePath+g $installPath/nginx/sites-enabled/$acmeDomain

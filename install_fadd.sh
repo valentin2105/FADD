@@ -5,7 +5,7 @@ if [[ "$1" != "--upgrade" ]]; then
 fi
 
 ############################################################################
-## This script is a fast-way to deploy FADD on a clean Debian jessie server.
+## This script is a fast-way to deploy FADD on a clean Debian / Ubuntu server
 ############################################################################
 # CHECK THESE VALUES :
 ############################################################################

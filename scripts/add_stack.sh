@@ -364,3 +364,27 @@ if  [ "$stackType" == "joomla" ]; then
 	fi
 fi
 ##################################################################
+if  [ "$stackType" == "piwik" ]; then
+	## Let's generate a DB password
+  piwikDbPasswd=$(pwgen 16 1)
+	sed -i -- s/aStr0NgPaSsw0rd/$piwikDbPasswd/g $faddPath/$siteName/docker-compose.yml
+
+	## Change port and site_name to bind
+	sed -i -- s/8100/$portWeb/g $faddPath/$siteName/docker-compose.yml
+	sed -i -- s/example.com/$siteName/g $faddPath/$siteName/nginx.conf
+
+	## Launch the stack
+	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d   &>/dev/null 2>&1 | tee -a $logsFile
+	checkLaunch=$(echo $?)
+	if [ $checkLaunch -eq 0 ]; then
+		echo -e "       Launch the stack               [${CGREEN}OK${CEND}]"
+		echo
+		echo "Your Piwik is reachable at https://$siteName"
+		echo
+		exit 0
+  else
+		echo -e "       Launch the stack               [${CRED}FAIL${CEND}]"
+		exit 1
+	fi
+fi
+#

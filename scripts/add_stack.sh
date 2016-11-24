@@ -176,7 +176,7 @@ echo -e "       Make some verifications        [${CGREEN}OK${CEND}]"
 ## Let's go
 ##################################################################
 ## Create Certs & Reverse-Proxy vhost to https
-if [ "$stackType" == "ghost" ] || [ "$stackType" == "wekan" ] ; then
+if [ "$stackType" == "ghost" ] || [ "$stackType" == "wekan" ] || [ "$stackType" == "rocketchat" ] ; then
 	$scriptsPath/add_domain.sh --proto=http --domain=$siteName --backend="$pubIP":"$portWeb"  --email="$adminMail"
 	checkAddDomain=$(echo $?)
 else

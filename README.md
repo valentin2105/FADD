@@ -4,10 +4,10 @@
 
 ### Features :
 - Nginx TLS Reverse-proxy
-- Automatic Let's Encrypt support
+- Auto Let's Encrypt support
 - SNI Multi-Domain support
 - Multi-image deployment (Wordpress, LEMP, Ghost, Drupal ...)
-- Automatic script for launch a deployment
+- Automated script for launch a deployment
 
 ### Scripts :
 Easily install Docker and all requirements :

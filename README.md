@@ -12,8 +12,8 @@
 ### Scripts :
 Easily install Docker and all requirements :
 ```
-cd /opt 
-git clone https://github.com/valentin2105/FADD.git 
+cd /opt
+git clone https://github.com/valentin2105/FADD.git
 cd /opt/FADD ; vim config.json # Configure FADD
 ./install_fadd.sh
 ```
@@ -23,6 +23,20 @@ There are some shell scripts to manage your Docker Host :
 - `add_domain.sh` - Deploy a Nginx TLS vhost to proxify a specified port.
 - `delete_stack.sh` - Delete datas, certs & config of the app stack.
 - `renew_certs.sh` - Renew all TLS certs presents on the host.
+
+Simple JSON configuration file
+```
+{
+	"faddPath": "/opt/FADD", # Where FADD was cloned
+	"installPath": "/srv", # Where you want to manage your stacks
+	"logsPath": "/var/log/fadd", # Where we put the logs
+	"pubIP": "10.1.1.1", # Your server public IP
+	"distrib": "jessie", # Your distribution (jessie,trusty,xenial)
+	"acmeDomain": "tls.example.com", # A dedicated domain name pointed on your server
+	"acmePath": "/srv/certs/challenges", # Where you want to put .well_knows challenge (TLS)
+	"adminMail": "contact@example.com" # Your E-mail (for certs generation)
+}
+```
 
 ### Examples :
 - Deploy All-in-one Wordpress :
@@ -46,10 +60,10 @@ There are some shell scripts to manage your Docker Host :
 - Wordpress (Nginx/PHP7/MariaDB)
 - Joomla (Nginx/PHP7/MariaDB)
 - Drupal 8 (Nginx/PHP7/SQLite)
-- LEMP (Nginx/PHP7/MariaDB) 
+- LEMP (Nginx/PHP7/MariaDB)
 - Ghost (Nginx/Ghost)
 - Wekan (Nginx,Wekan)
-- Piwik (Nginx,Piwik,MySQL) 
+- Piwik (Nginx,Piwik,MySQL)
 
 ### Demo :
 

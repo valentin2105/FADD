@@ -94,7 +94,7 @@ CRED="${CSI}1;31m"
 CEND="${CSI}0m"
 echo
 logsFile=$(echo "$logsPath"/"$siteName".log)
-echo "Let's create `tput bold`$siteName`tput sgr0`..."  | tee -a $logsFile 
+echo "Let's create `tput bold`$siteName`tput sgr0`..."  | tee -a $logsFile
 echo
 if [ -z $siteName ]; then
 	echo -e "       Make some verifications        [${CRED}FAIL${CEND}]"
@@ -387,4 +387,25 @@ if  [ "$stackType" == "piwik" ]; then
 		exit 1
 	fi
 fi
-#
+##################################################################
+if  [ "$stackType" == "rocketchat" ]; then
+
+	## Change port and site_name to bind
+	sed -i -- s/8100/$portWeb/g $faddPath/$siteName/docker-compose.yml
+
+	## Launch the stack
+	$composePath/docker-compose -f $faddPath/$siteName/docker-compose.yml up -d   &>/dev/null 2>&1 | tee -a $logsFile
+	sleep 5
+	checkLaunch=$(echo $?)
+	if [ $checkLaunch -eq 0 ]; then
+		echo -e "       Launch the stack               [${CGREEN}OK${CEND}]"
+		echo
+		echo "Your RocketChat is reachable at https://$siteName"
+		echo
+		exit 0
+  else
+		echo -e "       Launch the stack               [${CRED}FAIL${CEND}]"
+		exit 1
+	fi
+fi
+#######

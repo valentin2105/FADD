@@ -24,7 +24,7 @@ There are some shell scripts to manage your Docker Host :
 - `delete_stack.sh` - Delete datas, certs & config of the app stack.
 - `renew_certs.sh` - Renew all TLS certs presents on the host.
 
-Simple JSON configuration file
+Simple JSON configuration file :
 ```
 {
 	"faddPath": "/opt/FADD", # Where FADD was cloned

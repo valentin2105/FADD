@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 clear
+set -e
 echo "::: Start Configuration"
 
 if [[ $EUID -ne 0 ]]; then
